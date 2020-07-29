@@ -1,25 +1,9 @@
-from discord.ext import commands
-import os
-import traceback
+import discord
+import modules
 from pathlib import Path
 token = "TOKEN"
 client = discord.Client()
-bot = commands.Bot(command_prefix='/')
-token = os.environ['DISCORD_BOT_TOKEN']
 
-
-@bot.event
-async def on_command_error(ctx, error):
-    orig_error = getattr(error, "original", error)
-    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(error_msg)
-
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send('pong')
-
-    
 @client.event
 async def on_ready():
     print("wakeup bot")
@@ -81,7 +65,7 @@ async def on_message(msg):
                 await msg.channel.send(f"登録失敗")
         else:
             await msg.channel.send(f"コマンドの入力方法間違えてる\nplease type this command `/help_add_command`")
-        return   
+        return 
+        
 
-
-bot.run(token)
+client.run(token)
